@@ -84,7 +84,7 @@
           </div>
         </div>
 
-        <div class="row mt-4">
+        <div v-if="!hasExistingAttachments" class="row mt-4">
           <div class="col-sm-9 offset-sm-3">
             <button type="submit" class="btn btn-success">Enviar Datos</button>
           </div>
@@ -113,6 +113,13 @@ const getProveedor = async () => {
   const segments = window.location.pathname.split('/');
   const id = segments[segments.length - 1];
 
+  if (!id) {
+    console.error('Error: ID de proveedor no válido o no encontrado en la URL.');
+    proveedor.value = null;
+    loading.value = false;
+    return;
+  }
+
   fetch(import.meta.env.VITE_GET_COTIZACION_API+"&ID="+id)
     .then(response => response.json())
     .then(data => {
@@ -121,6 +128,8 @@ const getProveedor = async () => {
     })  
     .catch(error => {
       console.error('Error:', error);
+      proveedor.value = null;
+      loading.value = false; // Cambia el estado de carga a falso en caso de error
       return null;
     });
 }
