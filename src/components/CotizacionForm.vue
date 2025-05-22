@@ -1,8 +1,10 @@
 <template>
+  
   <div class="container mt-5">
-    <h2 class="mb-4 text-primary">Detalles del Proveedor y Licitación</h2>
-
     <div v-if="proveedor">
+    <h2 class="mb-4 text-primary">{{ proveedor.Licitacion }}</h2>
+
+    
       <form class="needs-validation" novalidate @submit.prevent="updateCotizacion">
         <div class="mb-3 row">
           <label for="razonSocial" class="col-sm-3 col-form-label">Razón Social:</label>
@@ -30,7 +32,7 @@
           </div>
         </div>
 
-        <div class="mb-3 row">
+        <!--<div class="mb-3 row">
           <label for="licitacion" class="col-sm-3 col-form-label">Licitación:</label>
           <div class="col-sm-9">
             <input
@@ -41,7 +43,7 @@
               readonly
             />
           </div>
-        </div>
+        </div>-->
 
         <div class="mb-3 row">
           <label for="fechaTope" class="col-sm-3 col-form-label">Fecha Tope:</label>
@@ -59,7 +61,7 @@
         <div class="mb-3 row">
           <label for="adjuntarDatos" class="col-sm-3 col-form-label">Adjuntar Cotización:</label>
           <div class="col-sm-9">
-            <template v-if="!hasExistingAttachments">
+            <!--<template v-if="hasExistingAttachments">-->
               <input
                 type="file"
                 accept="application/pdf"
@@ -67,11 +69,11 @@
                 id="adjuntarDatos"
                 @change="handleFileUpload"
                 multiple
-                :disabled="hasExistingAttachments"
+                :disabled="hasExistingAttachments && false"
               /> 
-            </template>
+            <!--</template>-->
             <small v-if="hasExistingAttachments" class="form-text text-muted">
-              Ya existen adjuntos para esta licitación.
+              Cargar un nuevo adjunto eliminará el anterior.
             </small>
             <div v-if="uploadedFiles.length" class="mt-2">
               <p>Archivos cargados:</p>
@@ -92,13 +94,13 @@
       </form>
     </div>
 
-    <div v-else-if="loading">
-      <p class="text-info">Cargando datos...</p>
-    </div>
-    <div v-else class="alert alert-danger" role="alert">
-      <p>No se pudo cargar la cotizacion.</p>
-    </div>
+  <div v-else-if="loading">
+    <p class="text-info">Cargando datos...</p>
   </div>
+  <div v-else class="alert alert-danger" role="alert">
+    <p>No se pudo cargar la cotizacion.</p>
+  </div>
+</div>
 </template>
 
 <script setup>
