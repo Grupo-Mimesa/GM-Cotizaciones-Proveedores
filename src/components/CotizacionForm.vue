@@ -1,6 +1,6 @@
 <template>
   
-  <div class="container mt-5">
+  <div class="container mt-4">
     <div v-if="proveedor">
     <h2 class="mb-4 text-primary">{{ proveedor.Licitacion }}</h2>
 
@@ -52,9 +52,53 @@
               type="text"
               class="form-control"
               id="fechaTope"
-              :value="proveedor['Fecha tope']"
+              :value="formatDate(proveedor['Fecha tope'])"
               readonly
             />
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="oferta" class="col-sm-3 col-form-label">Oferta:</label>
+          <div class="col-sm-9">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="oferta" id="oferta1" value="Total" v-model="proveedor.Oferta">
+              <label class="form-check-label" for="oferta1">
+                Total
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="oferta" id="oferta2" value="Parcial" v-model="proveedor.Oferta">
+              <label class="form-check-label" for="oferta2">
+                Parcial
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="oferta" id="oferta3" value="Sin oferta" v-model="proveedor.Oferta">
+              <label class="form-check-label" for="oferta3">
+                Sin oferta
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="MontoTotal" class="col-sm-3 col-form-label">Monto Total:</label>
+          <div class="col-sm-9">
+            <input
+              type="number"
+              class="form-control"
+              id="MontoTotal"
+              name="MontoTotal"
+              v-model="proveedor.MontoTotal"
+            />
+          </div>
+        </div>
+        
+        <div class="mb-3 row">
+          <label for="comentarios" class="col-sm-3 col-form-label">Comentarios:</label>
+          <div class="col-sm-9">
+            <textarea class="form-control" id="comentarios" rows="3" v-model="proveedor.Comentarios"></textarea>
           </div>
         </div>
 
@@ -86,7 +130,7 @@
           </div>
         </div>
 
-        <div v-if="!hasExistingAttachments" class="row mt-4">
+        <div class="row mt-4">
           <div class="col-sm-9 offset-sm-3">
             <button type="submit" class="btn btn-success">Enviar Datos</button>
           </div>
@@ -98,7 +142,7 @@
     <p class="text-info">Cargando datos...</p>
   </div>
   <div v-else class="alert alert-danger" role="alert">
-    <p>No se pudo cargar la cotizacion.</p>
+    <p><strong>La licitacion buscada no se encuentra o ya fue cerrada.</strong></p>
   </div>
 </div>
 </template>
@@ -106,10 +150,12 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import getBase64 from "../utils/getBase64.js";
+import formatDate from "../utils/formatDate.js";
 
 const proveedor = ref(null);
 const loading = ref(true); // Estado de carga
 const uploadedFiles = ref([]); // Para almacenar los archivos seleccionados
+const filesChanged = ref(false);
 
 const getProveedor = async () => {
   const segments = window.location.pathname.split('/');
@@ -144,11 +190,17 @@ const hasExistingAttachments = computed(() => {
 const updateCotizacion = async () => {
   const formData = {
     ID: proveedor.value.ID,
-    datosAdjuntos: await Promise.all([...uploadedFiles.value].map(async file => ({
+    Oferta: proveedor.value.Oferta,
+    MontoTotal: proveedor.value.MontoTotal,
+    Comentarios: proveedor.value.Comentarios,
+  };
+
+  if (filesChanged.value) {
+    formData.datosAdjuntos = await Promise.all([...uploadedFiles.value].map(async file => ({
       name: file.name,
       contentBytes: await getBase64(file)
     })))
-  };
+  }
 
   fetch(import.meta.env.VITE_UPDATE_COTIZACION_API, {
     method: "POST",
@@ -167,6 +219,7 @@ const updateCotizacion = async () => {
 // Maneja la selección de archivos
 const handleFileUpload = async (event) => {
   uploadedFiles.value = Array.from(event.target.files);
+  filesChanged.value = true; // Marca que los archivos han cambiado
 };
 
 onMounted(() => {
