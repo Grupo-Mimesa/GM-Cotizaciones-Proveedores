@@ -1,6 +1,6 @@
 <script setup>
-import DefaultLayout from './layouts/DefaultLayout.vue';
-import CotizacionForm from './components/CotizacionForm.vue';
+import DefaultLayout from '@/layouts/DefaultLayout.vue';
+import CotizacionForm from '@/views/CotizacionForm.vue';
 </script>
 
 <template>
