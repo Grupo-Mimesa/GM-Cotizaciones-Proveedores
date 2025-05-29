@@ -1,4 +1,5 @@
 <template>
+  <DefaultLayout>
   <div class="container mt-4">
     <div v-if="proveedor">
       <h2 class="mb-4 text-primary">
@@ -213,11 +214,12 @@
       <p v-else>Cargando información del proveedor...</p>
     </template>
   </ModalComponent>
-  
+  </DefaultLayout>
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from "vue";
+import DefaultLayout from '@/layouts/DefaultLayout.vue';
+import { ref, onMounted, computed } from "vue";
 import getBase64 from "@/utils/getBase64.js";
 import formatDate from "@/utils/formatDate.js";
 import ModalComponent from "@/components/ModalComponent.vue";
