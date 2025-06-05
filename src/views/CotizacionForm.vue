@@ -112,7 +112,14 @@
           <label for="MontoTotal" class="col-sm-3 col-form-label fw-bold"
             >Monto Total (sin IVA):</label
           >
-          <div class="col-sm-9">
+          <div class="col-sm-2">
+            <select v-model="proveedor.Moneda" name="Moneda" id="Moneda" class="form-select" required>
+              <option value="" disabled selected>Moneda</option>
+              <option value="VES">VES</option>
+              <option value="USD">USD</option>
+            </select>
+          </div>
+          <div class="col-sm-7">
             <input
               type="number"
               class="form-control"
@@ -198,7 +205,7 @@
     <template v-slot="{ data: proveedorParaResumen }">
       <div v-if="proveedorParaResumen">
         <p><strong>Oferta:</strong> {{ proveedorParaResumen.Oferta }}</p>
-        <p><strong>Monto Total:</strong> {{ proveedorParaResumen.MontoTotal }}</p>
+        <p><strong>Monto Total:</strong> {{ proveedorParaResumen.Moneda }} {{ proveedorParaResumen.MontoTotal }}</p>
         <p><strong>Comentarios:</strong> {{ proveedorParaResumen.Comentarios }}</p>
         
         <h6 class="mt-3">Archivos a Adjuntar:</h6>
