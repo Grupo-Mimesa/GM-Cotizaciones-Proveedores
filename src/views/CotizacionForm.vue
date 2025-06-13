@@ -297,8 +297,10 @@ const updateCotizacion = async () => {
   }).then((response) => {
     if (response.ok) {
       alert("Datos enviados correctamente!");
+      confirmSendData.value = false
     } else {
       alert("Error al enviar datos.");
+      location.reload();
     }
   });
 };
