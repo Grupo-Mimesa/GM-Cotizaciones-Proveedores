@@ -118,6 +118,7 @@
               <option value="VES">VES</option>
               <option value="USD">USD</option>
             </select>
+            <div class="invalid-feedback">Por favor, seleccione una moneda.</div>
           </div>
           <div class="col-sm-7">
             <input
@@ -127,7 +128,12 @@
               name="MontoTotal"
               v-model="proveedor.MontoTotal"
               required
+              step="0.01"
+              pattern="^\d+(\.\d{1,2})?$" title="Ingrese un monto válido, opcionalmente con hasta dos decimales."
             />
+            <div class="invalid-feedback">
+              Por favor, ingrese un monto total válido (ej. 100 o 100.00).
+            </div>
           </div>
         </div>
 
