@@ -3,13 +3,13 @@
   <div class="container mt-4">
     <div v-if="proveedor">
       <h2 class="mb-4 text-primary">
-        OR {{ proveedor.OR }}: {{ proveedor.Licitacion }}
+        <b>OR {{ proveedor.OR }}: {{ proveedor.Licitacion }}</b>
       </h2>
 
       <form
         class="needs-validation"
-        novalidate
-        @submit.prevent="confirmSendData = true"
+        ref="formRef" novalidate
+        @submit.prevent="handleFormSubmit"
       >
         <div class="mb-3 row">
           <label for="razonSocial" class="col-sm-3 col-form-label fw-bold"
@@ -54,7 +54,7 @@
 
         <div class="mb-3 row">
           <label for="fechaTope" class="col-sm-3 col-form-label fw-bold"
-            >Fecha de Cierre:</label
+            >Fecha de Cierre de Presentación de oferta:</label
           >
           <div class="col-sm-9">
             <input
@@ -231,10 +231,15 @@ import getBase64 from "@/utils/getBase64.js";
 import formatDate from "@/utils/formatDate.js";
 import ModalComponent from "@/components/ModalComponent.vue";
 
-const proveedor = ref(null);
 const loading = ref(true); // Estado de carga
+
+const proveedor = ref(null);
+
+const formRef = ref(null);
 const uploadedFiles = ref([]); // Para almacenar los archivos seleccionados
 const filesChanged = ref(false);
+const formSubmitted = ref(false);
+
 const confirmSendData = ref(false);
 
 const showCotizacion = async () => {
@@ -296,9 +301,10 @@ const updateCotizacion = async () => {
     body: JSON.stringify(formData),
   }).then((response) => {
     if (response.ok) {
+      confirmSendData.value = false;
       alert("Datos enviados correctamente!");
-      confirmSendData.value = false
     } else {
+      confirmSendData.value = false;
       alert("Error al enviar datos.");
       location.reload();
     }
@@ -310,6 +316,25 @@ const handleFileUpload = async (event) => {
   uploadedFiles.value = Array.from(event.target.files);
   filesChanged.value = true; // Marca que los archivos han cambiado
 };
+
+const handleFormSubmit = (event) => {
+  formSubmitted.value = true;
+  if (formRef.value && formRef.value.checkValidity()) {
+    // Si el formulario es válido, entonces abrimos el modal
+    console.log('Formulario válido. Abriendo modal de confirmación.');
+    confirmSendData.value = true;
+    // Opcional: Blur el botón para evitar el warning de accesibilidad
+    const focusedElement = document.activeElement;
+    if (focusedElement instanceof HTMLElement) {
+      focusedElement.blur();
+    }
+  } else {
+    // Si el formulario no es válido, Bootstrap mostrará los mensajes de error
+    console.log('Formulario inválido. Mostrando errores de validación.');
+    // Añade la clase 'was-validated' al formulario para que Bootstrap muestre los estilos de validación
+    formRef.value.classList.add('was-validated');
+  }
+}
 
 onMounted(() => {
   showCotizacion();
