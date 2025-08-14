@@ -81,7 +81,7 @@
                   value="Total"
                   v-model="proveedor.Oferta"
                 />
-                <label class="form-check-label" for="oferta1"> Total </label>
+                <label class="form-check-label" for="oferta1"> Total: Abarca el total de lo solicitado por Mimesa </label>
               </div>
               <div class="form-check">
                 <input
@@ -92,7 +92,7 @@
                   value="Parcial"
                   v-model="proveedor.Oferta"
                 />
-                <label class="form-check-label" for="oferta2"> Parcial </label>
+                <label class="form-check-label" for="oferta2"> Parcial: Abarca parte de lo solicitado por Mimesa </label>
               </div>
               <div class="form-check">
                 <input
@@ -103,14 +103,14 @@
                   value="Sin oferta"
                   v-model="proveedor.Oferta"
                 />
-                <label class="form-check-label" for="oferta3"> Sin oferta </label>
+                <label class="form-check-label" for="oferta3"> Sin oferta: No se presentará oferta </label>
               </div>
             </div>
           </div>
 
           <div class="mb-3 row">
             <label for="MontoTotal" class="col-sm-3 col-form-label fw-bold"
-              >Monto Total (sin IVA):</label
+              >Monto Total de la Oferta (sin IVA):</label
             >
             <div class="col-sm-2">
               <select v-model="proveedor.Moneda" name="Moneda" id="Moneda" class="form-select" required>
