@@ -53,6 +53,21 @@
           </div>-->
 
           <div class="mb-3 row">
+            <label for="razonSocial" class="col-sm-3 col-form-label fw-bold"
+              >Comentarios de la Licitación:</label
+            >
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                id="Comentarios"
+                :value="proveedor['Comentarios']"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="mb-3 row">
             <label for="fechaTope" class="col-sm-3 col-form-label fw-bold"
               >Fecha de Cierre de Presentación de oferta:</label
             >
@@ -139,7 +154,7 @@
 
           <div class="mb-3 row">
             <label for="comentarios" class="col-sm-3 col-form-label fw-bold"
-              >Comentarios:</label
+              >Comentarios de la oferta:</label
             >
             <div class="col-sm-9">
               <textarea
