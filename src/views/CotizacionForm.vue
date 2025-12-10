@@ -53,15 +53,15 @@
           </div>-->
 
           <div class="mb-3 row">
-            <label for="razonSocial" class="col-sm-3 col-form-label fw-bold"
+            <label for="comentariosLicitacion" class="col-sm-3 col-form-label fw-bold"
               >Comentarios de la Licitación:</label
             >
             <div class="col-sm-9">
               <input
                 type="text"
                 class="form-control"
-                id="Comentarios"
-                :value="proveedor['Comentarios']"
+                id="comentariosLicitacion"
+                :value="proveedor['Comentarios Licitacion']"
                 readonly
               />
             </div>
@@ -153,15 +153,15 @@
           </div>
 
           <div class="mb-3 row">
-            <label for="comentarios" class="col-sm-3 col-form-label fw-bold"
+            <label for="comentariosOferta" class="col-sm-3 col-form-label fw-bold"
               >Comentarios de la oferta:</label
             >
             <div class="col-sm-9">
               <textarea
                 class="form-control"
-                id="comentarios"
+                id="comentariosOferta"
                 rows="3"
-                v-model="proveedor.Comentarios"
+                v-model="proveedor['Comentarios Oferta']"
                 required
               ></textarea>
             </div>
@@ -232,7 +232,7 @@
         <div v-if="proveedorParaResumen">
           <p><strong>Oferta:</strong> {{ proveedorParaResumen.Oferta }}</p>
           <p><strong>Monto Total:</strong> {{ proveedorParaResumen.Moneda }} {{ proveedorParaResumen.MontoTotal }}</p>
-          <p><strong>Comentarios:</strong> {{ proveedorParaResumen.Comentarios }}</p>
+          <p><strong>Comentarios:</strong> {{ proveedorParaResumen['Comentarios Oferta'] }}</p>
           
           <h6 class="mt-3">Archivos a Adjuntar:</h6>
           <div v-if="uploadedFiles.length"> <ul>
@@ -311,7 +311,7 @@ const updateCotizacion = async () => {
     Oferta: proveedor.value.Oferta,
     Moneda: proveedor.value.Moneda,
     MontoTotal: parseFloat(proveedor.value.MontoTotal),
-    Comentarios: proveedor.value.Comentarios,
+    Comentarios: proveedor.value['Comentarios Oferta'],
   };
   console.log(formData)
 
