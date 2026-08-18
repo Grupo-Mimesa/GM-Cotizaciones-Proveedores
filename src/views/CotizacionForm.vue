@@ -44,19 +44,6 @@
                 </div>
               </div>
 
-              <!--<div class="mb-3 row">
-                <label for="licitacion" class="col-sm-3 col-form-label">Licitación:</label>
-                <div class="col-sm-9">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="licitacion"
-                    :value="proveedor.Licitacion"
-                    readonly
-                  />
-                </div>
-              </div>-->
-
               <div class="mb-3 row">
                 <label for="comentariosLicitacion" class="col-sm-3 col-form-label fw-bold"
                   >Comentarios de la Licitación:</label
@@ -67,6 +54,36 @@
                     class="form-control"
                     id="comentariosLicitacion"
                     :value="proveedor['Comentarios Licitacion']"
+                    readonly
+                  />
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label for="solicitante" class="col-sm-3 col-form-label fw-bold"
+                  >Solicitante:</label
+                >
+                <div class="col-sm-9">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="solicitante"
+                    :value="proveedor.Solicitante"
+                    readonly
+                  />
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label for="fechaRecorrido" class="col-sm-3 col-form-label fw-bold"
+                  >Fecha del Recorrido en Área:</label
+                >
+                <div class="col-sm-9">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fechaRecorrido"
+                    :value="formatDate(proveedor['Fecha recorrido'])"
                     readonly
                   />
                 </div>
