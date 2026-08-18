@@ -332,6 +332,9 @@ const hasExistingAttachments = computed(() => {
 });
 
 const updateCotizacion = async () => {
+
+  guardando.value = true;
+
   const formData = {
     ID: proveedor.value.ID,
     Oferta: proveedor.value.Oferta,
@@ -339,7 +342,6 @@ const updateCotizacion = async () => {
     MontoTotal: parseFloat(proveedor.value.MontoTotal),
     Comentarios: proveedor.value['Comentarios Oferta'],
   };
-  console.log(formData)
 
   if (filesChanged.value) {
     formData.datosAdjuntos = await Promise.all(
@@ -363,6 +365,7 @@ const updateCotizacion = async () => {
       alert("Error al enviar datos.");
       location.reload();
     }
+    guardando.value = false;
   });
 };
 
