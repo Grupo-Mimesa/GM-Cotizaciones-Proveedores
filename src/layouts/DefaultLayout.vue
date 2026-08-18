@@ -8,14 +8,14 @@
           </a>
           <div class="collapse navbar-collapse" id="navbarText">
           <span class="navbar-text fs-5">
-            <strong>Registro de Cotizaciones</strong>
+            <strong>Cotizaciones a Proveedores</strong>
           </span>
         </div>
         </div>
       </nav>
     </header>
 
-    <main>
+    <main class="bg-body-tertiary">
       <slot />
     </main>
 
@@ -46,7 +46,7 @@
 }
 
 .navbar {
-  height: 80px;
+  height: 72px;
   max-height: 80px;
   & img {
     max-width:160px;
