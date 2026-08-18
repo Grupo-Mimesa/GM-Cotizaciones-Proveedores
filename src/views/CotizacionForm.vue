@@ -1,208 +1,215 @@
 <template>
   <DefaultLayout>
-    <div class="container mt-4">
-      <div v-if="proveedor && !successfulSubmit">
+    <div class="container my-4">
+      <div 
+        v-if="proveedor && !successfulSubmit"
+        class="row justify-content-center"
+      >
         <h2 class="mb-4 text-primary">
           <b>OR {{ proveedor.OR }}: {{ proveedor.Licitacion }}</b>
         </h2>
 
-        <form
-          class="needs-validation"
-          ref="formRef" novalidate
-          @submit.prevent="handleFormSubmit"
-        >
-          <div class="mb-3 row">
-            <label for="razonSocial" class="col-sm-3 col-form-label fw-bold"
-              >Razón Social:</label
+        <div class="col-md-12">
+          <div class="card p-4">
+            <form
+              class="needs-validation"
+              ref="formRef" novalidate
+              @submit.prevent="handleFormSubmit"
             >
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                id="razonSocial"
-                :value="proveedor['Razon Social']"
-                readonly
-              />
-            </div>
-          </div>
-
-          <div class="mb-3 row">
-            <label for="rif" class="col-sm-3 col-form-label fw-bold">RIF:</label>
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                id="rif"
-                :value="proveedor.RIF"
-                readonly
-              />
-            </div>
-          </div>
-
-          <!--<div class="mb-3 row">
-            <label for="licitacion" class="col-sm-3 col-form-label">Licitación:</label>
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                id="licitacion"
-                :value="proveedor.Licitacion"
-                readonly
-              />
-            </div>
-          </div>-->
-
-          <div class="mb-3 row">
-            <label for="comentariosLicitacion" class="col-sm-3 col-form-label fw-bold"
-              >Comentarios de la Licitación:</label
-            >
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                id="comentariosLicitacion"
-                :value="proveedor['Comentarios Licitacion']"
-                readonly
-              />
-            </div>
-          </div>
-
-          <div class="mb-3 row">
-            <label for="fechaTope" class="col-sm-3 col-form-label fw-bold"
-              >Fecha de Cierre de Presentación de oferta:</label
-            >
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                id="fechaTope"
-                :value="formatDate(proveedor['Fecha tope'])"
-                readonly
-              />
-            </div>
-          </div>
-
-          <div class="mb-3 row">
-            <label for="oferta" class="col-sm-3 col-form-label fw-bold"
-              >Oferta:</label
-            >
-            <div class="col-sm-9">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="oferta"
-                  id="oferta1"
-                  value="Total"
-                  v-model="proveedor.Oferta"
-                />
-                <label class="form-check-label" for="oferta1"> Total: Abarca el total de lo solicitado por Mimesa </label>
+              <div class="mb-3 row">
+                <label for="razonSocial" class="col-sm-3 col-form-label fw-bold"
+                  >Razón Social:</label
+                >
+                <div class="col-sm-9">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="razonSocial"
+                    :value="proveedor['Razon Social']"
+                    readonly
+                  />
+                </div>
               </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="oferta"
-                  id="oferta2"
-                  value="Parcial"
-                  v-model="proveedor.Oferta"
-                />
-                <label class="form-check-label" for="oferta2"> Parcial: Abarca parte de lo solicitado por Mimesa </label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="oferta"
-                  id="oferta3"
-                  value="Sin oferta"
-                  v-model="proveedor.Oferta"
-                />
-                <label class="form-check-label" for="oferta3"> Sin oferta: No se presentará oferta </label>
-              </div>
-            </div>
-          </div>
 
-          <div class="mb-3 row">
-            <label for="MontoTotal" class="col-sm-3 col-form-label fw-bold"
-              >Monto Total de la Oferta (sin IVA):</label
-            >
-            <div class="col-sm-2">
-              <select v-model="proveedor.Moneda" name="Moneda" id="Moneda" class="form-select" required>
-                <option value="" disabled selected>Moneda</option>
-                <option value="VES">VES</option>
-                <option value="USD">USD</option>
-              </select>
-              <div class="invalid-feedback">Por favor, seleccione una moneda.</div>
-            </div>
-            <div class="col-sm-7">
-              <input
-                type="number"
-                class="form-control"
-                id="MontoTotal"
-                name="MontoTotal"
-                v-model="proveedor.MontoTotal"
-                required
-                step="0.01"
-                pattern="^\d+(\.\d{1,2})?$" title="Ingrese un monto válido, opcionalmente con hasta dos decimales."
-              />
-              <div class="invalid-feedback">
-                Por favor, ingrese un monto total válido (ej. 100 o 100.00).
+              <div class="mb-3 row">
+                <label for="rif" class="col-sm-3 col-form-label fw-bold">RIF:</label>
+                <div class="col-sm-9">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="rif"
+                    :value="proveedor.RIF"
+                    readonly
+                  />
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div class="mb-3 row">
-            <label for="comentariosOferta" class="col-sm-3 col-form-label fw-bold"
-              >Comentarios de la oferta:</label
-            >
-            <div class="col-sm-9">
-              <textarea
-                class="form-control"
-                id="comentariosOferta"
-                rows="3"
-                v-model="proveedor['Comentarios Oferta']"
-                required
-              ></textarea>
-            </div>
-          </div>
+              <!--<div class="mb-3 row">
+                <label for="licitacion" class="col-sm-3 col-form-label">Licitación:</label>
+                <div class="col-sm-9">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="licitacion"
+                    :value="proveedor.Licitacion"
+                    readonly
+                  />
+                </div>
+              </div>-->
 
-          <div class="mb-3 row">
-            <label for="adjuntarDatos" class="col-sm-3 col-form-label fw-bold"
-              >Adjuntar Cotización:</label
-            >
-            <div class="col-sm-9">
-              <!--<template v-if="hasExistingAttachments">-->
-              <input
-                type="file"
-                accept="application/pdf, image/png, image/jpeg"
-                class="form-control"
-                id="adjuntarDatos"
-                @change="handleFileUpload"
-                multiple
-                :disabled="hasExistingAttachments && false"
-              />
-              <!--</template>-->
-              <small v-if="hasExistingAttachments" class="form-text text-muted">
-                Cargar un nuevo adjunto eliminará el anterior.
-              </small>
-              <div v-if="uploadedFiles.length" class="mt-2">
-                <p>Archivos cargados:</p>
-                <ul>
-                  <li v-for="file in uploadedFiles" :key="file.name">
-                    {{ file.name }} ({{ (file.size / 1024).toFixed(2) }} KB)
-                  </li>
-                </ul>
+              <div class="mb-3 row">
+                <label for="comentariosLicitacion" class="col-sm-3 col-form-label fw-bold"
+                  >Comentarios de la Licitación:</label
+                >
+                <div class="col-sm-9">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="comentariosLicitacion"
+                    :value="proveedor['Comentarios Licitacion']"
+                    readonly
+                  />
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div class="row mt-4">
-            <div class="col-sm-9 offset-sm-3">
-              <button type="submit" class="btn btn-success">Enviar Datos</button>
-            </div>
+              <div class="mb-3 row">
+                <label for="fechaTope" class="col-sm-3 col-form-label fw-bold"
+                  >Fecha de Cierre de Presentación de oferta:</label
+                >
+                <div class="col-sm-9">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fechaTope"
+                    :value="formatDate(proveedor['Fecha tope'])"
+                    readonly
+                  />
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label for="oferta" class="col-sm-3 col-form-label fw-bold"
+                  >Oferta:</label
+                >
+                <div class="col-sm-9">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="oferta"
+                      id="oferta1"
+                      value="Total"
+                      v-model="proveedor.Oferta"
+                    />
+                    <label class="form-check-label" for="oferta1"> Total: Abarca el total de lo solicitado por Mimesa </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="oferta"
+                      id="oferta2"
+                      value="Parcial"
+                      v-model="proveedor.Oferta"
+                    />
+                    <label class="form-check-label" for="oferta2"> Parcial: Abarca parte de lo solicitado por Mimesa </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="oferta"
+                      id="oferta3"
+                      value="Sin oferta"
+                      v-model="proveedor.Oferta"
+                    />
+                    <label class="form-check-label" for="oferta3"> Sin oferta: No se presentará oferta </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label for="MontoTotal" class="col-sm-3 col-form-label fw-bold"
+                  >Monto Total de la Oferta (sin IVA):</label
+                >
+                <div class="col-sm-2">
+                  <select v-model="proveedor.Moneda" name="Moneda" id="Moneda" class="form-select" required>
+                    <option value="" disabled selected>Moneda</option>
+                    <option value="VES">VES</option>
+                    <option value="USD">USD</option>
+                  </select>
+                  <div class="invalid-feedback">Por favor, seleccione una moneda.</div>
+                </div>
+                <div class="col-sm-7">
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="MontoTotal"
+                    name="MontoTotal"
+                    v-model="proveedor.MontoTotal"
+                    required
+                    step="0.01"
+                    pattern="^\d+(\.\d{1,2})?$" title="Ingrese un monto válido, opcionalmente con hasta dos decimales."
+                  />
+                  <div class="invalid-feedback">
+                    Por favor, ingrese un monto total válido (ej. 100 o 100.00).
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label for="comentariosOferta" class="col-sm-3 col-form-label fw-bold"
+                  >Comentarios de la oferta:</label
+                >
+                <div class="col-sm-9">
+                  <textarea
+                    class="form-control"
+                    id="comentariosOferta"
+                    rows="3"
+                    v-model="proveedor['Comentarios Oferta']"
+                    required
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label for="adjuntarDatos" class="col-sm-3 col-form-label fw-bold"
+                  >Adjuntar Cotización:</label
+                >
+                <div class="col-sm-9">
+                  <!--<template v-if="hasExistingAttachments">-->
+                  <input
+                    type="file"
+                    accept="application/pdf, image/png, image/jpeg"
+                    class="form-control"
+                    id="adjuntarDatos"
+                    @change="handleFileUpload"
+                    multiple
+                    :disabled="hasExistingAttachments && false"
+                  />
+                  <!--</template>-->
+                  <small v-if="hasExistingAttachments" class="form-text text-muted">
+                    Cargar un nuevo adjunto eliminará el anterior.
+                  </small>
+                  <div v-if="uploadedFiles.length" class="mt-2">
+                    <p>Archivos cargados:</p>
+                    <ul>
+                      <li v-for="file in uploadedFiles" :key="file.name">
+                        {{ file.name }} ({{ (file.size / 1024).toFixed(2) }} KB)
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-4">
+                <div class="col-sm-9 offset-sm-3">
+                  <button type="submit" class="btn btn-success">Enviar Datos</button>
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
 
       <div v-else-if="loading && !successfulSubmit">
@@ -224,6 +231,7 @@
       title="Confirmación de envío"
       description="Resumen de cotización"
       :body="proveedor"
+      :saving="guardando"
       @confirm="updateCotizacion"
       @cancel="confirmSendData = false"
       @update:open="confirmSendData = $event"
@@ -260,6 +268,7 @@ import ModalComponent from "@/components/ModalComponent.vue";
 const loading = ref(true); // Estado de carga
 
 const proveedor = ref(null);
+const guardando = ref(false);
 
 const formRef = ref(null);
 const uploadedFiles = ref([]); // Para almacenar los archivos seleccionados

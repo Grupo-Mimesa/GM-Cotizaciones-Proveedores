@@ -16,7 +16,10 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
             @click="handleCancel">Cancelar</button>
-          <button type="button" class="btn btn-primary" @click="handleConfirm">Confirmar</button>
+          <button type="button" class="btn btn-primary" @click="handleConfirm" :disabled="saving">
+            <span v-if="saving" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span v-else>Confirmar</span>
+          </button>
         </div>
       </div>
     </div>
@@ -34,13 +37,19 @@ const props = defineProps({
   body: {
     type: Object,
     default: () => ({}),
-  }
+  },
+  saving: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['update:open', 'confirm', 'cancel']);
 
 const modalElement = ref(null);
 let modal = null;
+
+const guardando = ref(false);
 
 onMounted(() => {
   if (modalElement.value) {
